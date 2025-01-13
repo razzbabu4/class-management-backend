@@ -6,7 +6,7 @@ const createStudent = async (req: Request, res: Response) => {
         const result = await UserServices.createStudentIntoDB(req.body);
         res.status(200).json({
             success: true,
-            message: "Student create successfully",
+            message: "Student created successfully",
             data: result
         })
     } catch (err) {
@@ -18,6 +18,23 @@ const createStudent = async (req: Request, res: Response) => {
     }
 }
 
+const createTeacher = async (req: Request, res: Response) => {
+    try {
+        const result = await UserServices.createTeacherIntoDB(req.body);
+        res.status(200).json({
+            success: true,
+            message: "Teacher created successfully",
+            data: result
+        })
+    } catch (err) {
+        res.status(400).json({
+            success: false,
+            message: "Failed to create teacher",
+            data: err
+        })
+    }
+}
+
 export const UserControllers = {
-    createStudent
+    createStudent, createTeacher
 }

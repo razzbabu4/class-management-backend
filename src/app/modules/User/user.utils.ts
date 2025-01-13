@@ -28,3 +28,33 @@ export const generateStudentId = async () => {
     incrementId = `S-${incrementId}`;
     return incrementId;
 };
+
+
+const findLastTeacherId = async () => {
+    const lastTeacher = await User.findOne(
+        {
+            role: 'teacher',
+        },
+        {
+            id: 1,
+            _id: 0,
+        },
+    )
+        .sort({
+            createdAt: -1,
+        })
+        .lean();
+
+    return lastTeacher?.id ? lastTeacher.id : undefined;
+};
+
+export const generateTeacherId = async () => {
+    let currentId = (0).toString();
+    const lastTeacherId = await findLastTeacherId();
+    if (lastTeacherId) {
+        currentId = lastTeacherId.substring(2);
+    }
+    let incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
+    incrementId = `T-${incrementId}`;
+    return incrementId;
+};

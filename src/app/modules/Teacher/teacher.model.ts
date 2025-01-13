@@ -1,13 +1,12 @@
 import { model, Schema } from "mongoose";
-import { TStudent, TUserName } from "./student.interface";
-import { BloodGroup, Gender } from "./student.constant";
+import { TTeacher, TTeacherUserName } from "./teacher.interface";
+import { BloodGroup, Gender } from "./teacher.constant";
 
-const userNameSchema = new Schema<TUserName>({
+const userNameSchema = new Schema<TTeacherUserName>({
     firstName: {
         type: String,
         required: [true, 'First Name is required'],
         trim: true,
-        maxlength: [20, 'First name can not be more than 20 character'],
     },
     middleName: { type: String, trim: true },
     lastName: {
@@ -17,8 +16,7 @@ const userNameSchema = new Schema<TUserName>({
     },
 });
 
-// create schema for student
-const studentSchema = new Schema<TStudent>(
+const teacherSchema = new Schema<TTeacher>(
     {
         id: { type: String, unique: true, required: [true, 'Id is required'] },
         user: {
@@ -28,6 +26,7 @@ const studentSchema = new Schema<TStudent>(
             ref: 'User',
         },
         name: { type: userNameSchema, required: true },
+        designation: { type: String, required: true },
         gender: {
             type: String,
             enum: {
@@ -51,10 +50,13 @@ const studentSchema = new Schema<TStudent>(
                 message:
                     "{VALUE} is not valid. The bloodGroup field can only be the one of the following: 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'",
             },
-            required: true,
         },
         permanentAddress: { type: String, required: true },
         presentAddress: { type: String, required: true },
+        academicDepartment: {
+            type: String,
+            required: [true, 'Department id is required'],
+        },
         isDeleted: {
             type: Boolean,
             default: false,
@@ -68,4 +70,4 @@ const studentSchema = new Schema<TStudent>(
     },
 );
 
-export const Student = model<TStudent>("Student", studentSchema)
+export const Teacher = model<TTeacher>("Teacher", teacherSchema)

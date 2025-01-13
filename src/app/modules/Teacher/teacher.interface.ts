@@ -11,24 +11,24 @@ export type TBloodGroup =
     | 'O+'
     | 'O-';
 
-export type TUserName = {
+export type TTeacherUserName = {
     firstName: string;
     middleName?: string;
     lastName: string;
 };
 
-export type TStudent = {
+export type TTeacher = {
     id: string;
     user: Types.ObjectId;
-    name: TUserName;
-    email: string;
+    designation: string;
+    name: TTeacherUserName;
     gender: TGender;
     dateOfBirth?: string;
-    contactNumber: string; // we want to access 0
+    email: string;
+    contactNumber: string;
     bloodGroup: TBloodGroup;
     presentAddress: string;
     permanentAddress: string;
+    academicDepartment: string;
     isDeleted: boolean;
 };
-
-
